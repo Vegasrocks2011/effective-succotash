@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forces & Motion — Distance-Time, Velocity-Time, Weight, Hooke's Law, Newton's 1st Law</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:15px;line-height:1.6}
+.app{max-width:900px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:22px;font-weight:600;margin-bottom:4px}
+h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.subtitle{font-size:13px;color:#666;margin-bottom:20px}
+
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.nb{padding:7px 14px;font-size:13px;border:1px solid #ccc;border-radius:8px;background:#fff;color:#555;cursor:pointer;font-family:inherit}
+.nb:hover{background:#f0f0f0}
+.nb.on{background:#1a56db;color:#fff;border-color:#1a56db}
+
+.pg{display:none}.pg.on{display:block}
+
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem 1.2rem;margin-bottom:12px}
+.c-blue{border-left:4px solid #3b82f6}
+.c-teal{border-left:4px solid #14b8a6}
+.c-purple{border-left:4px solid #8b5cf6}
+.c-amber{border-left:4px solid #f59e0b}
+.c-red{border-left:4px solid #ef4444}
+.c-green{border-left:4px solid #22c55e}
+.c-coral{border-left:4px solid #f97316}
+.c-pink{border-left:4px solid #ec4899}
+.c-indigo{border-left:4px solid #6366f1}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+
+.bdg{display:inline-block;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:600;margin-bottom:7px}
+.b-blue{background:#dbeafe;color:#1e40af}
+.b-teal{background:#ccfbf1;color:#0f766e}
+.b-purple{background:#ede9fe;color:#6d28d9}
+.b-amber{background:#fef3c7;color:#92400e}
+.b-red{background:#fee2e2;color:#991b1b}
+.b-green{background:#dcfce7;color:#166534}
+.b-coral{background:#ffedd5;color:#9a3412}
+.b-pink{background:#fce7f3;color:#9d174d}
+.b-indigo{background:#e0e7ff;color:#3730a3}
+
+.fbox{background:#f3f4f6;border-radius:8px;padding:10px 14px;font-size:17px;font-weight:700;text-align:center;margin:8px 0}
+.fbox-sm{background:#f3f4f6;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:700;text-align:center;margin:5px 0}
+
+.row{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px solid #f0f0f0}
+.row:last-child{border-bottom:none}
+.tm{font-weight:600;font-size:13px;min-width:150px;flex-shrink:0}
+.df{font-size:13px;color:#444;line-height:1.5}
+
+.st{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:9px;margin-top:18px}
+.divider{border:none;border-top:3px solid #e0e0e0;margin:26px 0}
+
+.topic-banner{border-radius:10px;padding:9px 16px;font-size:14px;font-weight:700;color:#fff;margin:22px 0 14px;display:flex;align-items:center;gap:8px}
+.tb-blue{background:#1e40af}
+.tb-teal{background:#0f766e}
+.tb-purple{background:#6d28d9}
+.tb-amber{background:#92400e}
+.tb-coral{background:#9a3412}
+
+.warn{background:#fee2e2;border-left:4px solid #ef4444;border-radius:0 8px 8px 0;padding:8px 13px;font-size:13px;color:#991b1b;margin-top:9px;line-height:1.5}
+.info{background:#dbeafe;border-left:4px solid #3b82f6;border-radius:0 8px 8px 0;padding:8px 13px;font-size:13px;color:#1e40af;margin-top:9px;line-height:1.5}
+.success{background:#dcfce7;border-left:4px solid #22c55e;border-radius:0 8px 8px 0;padding:8px 13px;font-size:13px;color:#166534;margin-top:9px;line-height:1.5}
+.amber-box{background:#fef3c7;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:8px 13px;font-size:13px;color:#92400e;margin-top:9px;line-height:1.5}
+
+/* graph grid */
+.graph-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0}
+.graph-box{background:#f9f9f9;border:1px solid #e0e0e0;border-radius:10px;padding:10px 8px;text-align:center}
+.graph-box p{font-size:12px;color:#555;margin-top:7px;line-height:1.4}
+.graph-title{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+
+/* SELF ASSESSMENT */
+.si{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem 1.2rem;margin-bottom:10px}
+.ss{font-size:14px;margin-bottom:11px;line-height:1.55}
+.sbs{display:flex;gap:8px;flex-wrap:wrap}
+.sb{padding:7px 18px;font-size:13px;border:1px solid #ccc;border-radius:8px;background:#f9f9f9;color:#555;cursor:pointer;font-family:inherit;font-weight:500}
+.sb:hover{background:#f0f0f0}
+.sg{background:#16a34a;color:#fff;border-color:#16a34a}
+.sam{background:#d97706;color:#fff;border-color:#d97706}
+.sr{background:#dc2626;color:#fff;border-color:#dc2626}
+
+/* DIAGNOSTIC */
+.qb{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem 1.2rem;margin-bottom:14px}
+.qt{font-size:14px;margin-bottom:12px;line-height:1.55}
+.ob{display:block;width:100%;text-align:left;padding:8px 14px;margin-bottom:6px;font-size:13px;border:1px solid #ddd;border-radius:8px;background:#f9f9f9;color:#1a1a1a;cursor:pointer;font-family:inherit}
+.ob:hover:not(:disabled){background:#f0f0f0}
+.ob:disabled{cursor:default}
+.oc{background:#dcfce7;color:#166534;border-color:#22c55e;font-weight:600}
+.ow{background:#fee2e2;color:#991b1b;border-color:#ef4444}
+.orc{background:#dcfce7;color:#166534;border-color:#22c55e}
+.fb{font-size:13px;margin-top:8px;padding:8px 12px;border-radius:8px;line-height:1.5;display:none}
+.fb.on{display:block}
+.fbc{background:#dcfce7;color:#166534}
+.fbw{background:#fee2e2;color:#991b1b}
+
+/* CALC */
+.ci{width:100%;padding:8px 12px;font-size:14px;border:1px solid #ccc;border-radius:8px;background:#f9f9f9;margin:8px 0;font-family:inherit}
+.ci:focus{outline:2px solid #3b82f6;border-color:#3b82f6}
+.ckb{padding:8px 20px;font-size:13px;border:1px solid #ccc;border-radius:8px;background:#f9f9f9;color:#1a1a1a;cursor:pointer;font-family:inherit;font-weight:500}
+.ckb:hover{background:#f0f0f0}
+
+.ab{padding:10px 26px;font-size:14px;border:none;border-radius:8px;background:#1a56db;color:#fff;cursor:pointer;font-family:inherit;font-weight:600}
+.ab:hover{background:#1e40af}
+
+/* SUMMARY */
+.tr2{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f0f0f0;flex-wrap:wrap;gap:6px}
+.tr2:last-child{border-bottom:none}
+.pill{padding:3px 11px;border-radius:20px;font-size:12px;font-weight:600}
+.pig{background:#dcfce7;color:#166534}
+.pia{background:#fef3c7;color:#92400e}
+.pir{background:#fee2e2;color:#991b1b}
+.stat-card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem;text-align:center}
+.stat-label{font-size:12px;color:#888;margin-bottom:6px}
+.stat-val{font-size:24px;font-weight:700}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 10px;font-weight:600;border-bottom:2px solid #e0e0e0;background:#f9f9f9}
+td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+tr:last-child td{border-bottom:none}
+
+@media(max-width:600px){.g2,.g3,.graph-grid{grid-template-columns:1fr}}
+@media print{.nav,.ab{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="nav">
+  <button class="nb on" onclick="sp('ko')">Knowledge Organiser</button>
+  <button class="nb" onclick="sp('sa')">Self-Assessment</button>
+  <button class="nb" onclick="sp('dq')">Diagnostic Questions</button>
+  <button class="nb" onclick="sp('cq')">Calculation Practice</button>
+  <button class="nb" onclick="bs();sp('sm')">My Summary</button>
+</div>
+
+<!-- ══════════════════════ KNOWLEDGE ORGANISER ══════════════════ -->
+<div class="pg on" id="pg-ko">
+<h1>Forces &amp; Motion</h1>
+<p class="subtitle">Pearson Edexcel International GCSE · Distance-Time Graphs · Velocity-Time Graphs · Weight · Hooke's Law · Newton's First Law</p>
+
+<!-- ─── 1. DISTANCE-TIME GRAPHS ─── -->
+<div class="topic-banner tb-blue">1 · Distance-Time Graphs</div>
+
+<div class="st">What does a distance-time graph show?</div>
+<div class="card c-blue">
+  <span class="bdg b-blue">Reading a distance-time graph</span>
+  <div class="g2" style="margin-top:8px">
+    <div>
+      <div class="row"><span class="tm">x-axis</span><span class="df">Time (s or minutes)</span></div>
+      <div class="row"><span class="tm">y-axis</span><span class="df">Distance from start (m or km)</span></div>
+      <div class="row"><span class="tm">Gradient</span><span class="df">= speed. Steeper gradient = greater speed.</span></div>
+      <div class="row"><span class="tm">Flat section</span><span class="df">Zero gradient = stationary (not moving). Distance not changing.</span></div>
+      <div class="row"><span class="tm">Straight line</span><span class="df">Constant speed (uniform motion)</span></div>
+      <div class="row"><span class="tm">Curved line</span><span class="df">Changing speed (accelerating or decelerating)</span></div>
+    </div>
+    <div>
+      <div class="fbox">speed = gradient = Δd ÷ Δt</div>
+      <p style="font-size:13px;color:#444;line-height:1.6;margin-top:8px">To find speed from a graph: pick two points on the line, draw a right-angled triangle, then divide the vertical rise (Δd) by the horizontal run (Δt).</p>
+      <div class="warn" style="margin-top:8px">A distance-time graph cannot have a negative gradient — distance from start cannot decrease (distance is always ≥ 0). If the object returns to the start the line returns to zero.</div>
+    </div>
+  </div>
+</div>
+
+<div class="st">Distance-time graph shapes — all cases</div>
+<div class="graph-grid">
+  <div class="graph-box">
+    <div class="graph-title">Stationary</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="40" x2="118" y2="40" stroke="#3b82f6" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Distance</text>
+    </svg>
+    <p>Horizontal line<br>Gradient = 0<br><strong>Speed = 0</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Constant Speed</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="80" x2="115" y2="18" stroke="#14b8a6" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Distance</text>
+    </svg>
+    <p>Straight diagonal line<br>Constant gradient<br><strong>Constant speed</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Greater Speed</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="80" x2="115" y2="18" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <line x1="18" y1="80" x2="80" y2="15" stroke="#8b5cf6" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Distance</text>
+      <text x="55" y="25" font-size="9" fill="#6d28d9" font-family="system-ui">steeper</text>
+    </svg>
+    <p>Steeper straight line<br>Larger gradient<br><strong>Greater speed</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Accelerating</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <path d="M18,82 Q50,75 90,30 T115,12" stroke="#f97316" stroke-width="2.5" fill="none"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Distance</text>
+    </svg>
+    <p>Curve getting steeper<br>Gradient increasing<br><strong>Accelerating</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Decelerating</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <path d="M18,80 Q60,30 95,15 T118,14" stroke="#ec4899" stroke-width="2.5" fill="none"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Distance</text>
+    </svg>
+    <p>Curve getting flatter<br>Gradient decreasing<br><strong>Decelerating</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Stop then Return</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="75" x2="60" y2="25" stroke="#6366f1" stroke-width="2.5"/>
+      <line x1="60" y1="25" x2="80" y2="25" stroke="#6366f1" stroke-width="2.5"/>
+      <line x1="80" y1="25" x2="116" y2="75" stroke="#6366f1" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Distance</text>
+    </svg>
+    <p>Go → Stop → Return<br>Returns to start<br><strong>Displacement back to 0</strong></p>
+  </div>
+</div>
+
+<hr class="divider">
+<!-- ─── 2. VELOCITY-TIME GRAPHS ─── -->
+<div class="topic-banner tb-teal">2 · Velocity-Time Graphs</div>
+
+<div class="st">What does a velocity-time graph show?</div>
+<div class="card c-teal">
+  <span class="bdg b-teal">Reading a velocity-time graph</span>
+  <div class="g2" style="margin-top:8px">
+    <div>
+      <div class="row"><span class="tm">x-axis</span><span class="df">Time (s)</span></div>
+      <div class="row"><span class="tm">y-axis</span><span class="df">Velocity (m/s) — can be negative (opposite direction)</span></div>
+      <div class="row"><span class="tm">Gradient</span><span class="df">= acceleration. Steep gradient = large acceleration.</span></div>
+      <div class="row"><span class="tm">Flat section</span><span class="df">Zero gradient = constant velocity (zero acceleration)</span></div>
+      <div class="row"><span class="tm">Area under graph</span><span class="df">= distance travelled (displacement)</span></div>
+      <div class="row"><span class="tm">Negative gradient</span><span class="df">= deceleration (slowing down)</span></div>
+      <div class="row"><span class="tm">Negative velocity</span><span class="df">= moving in opposite direction</span></div>
+    </div>
+    <div>
+      <div class="fbox">acceleration = gradient = Δv ÷ Δt</div>
+      <div class="fbox-sm" style="margin-top:6px">distance = area under graph</div>
+      <div class="info" style="margin-top:8px">For a rectangle: area = base × height<br>For a triangle: area = ½ × base × height<br>For a trapezium: break into rectangle + triangle</div>
+      <div class="success" style="margin-top:6px">Key difference from d-t graph: velocity-time CAN have negative values (moving backwards). Distance-time cannot.</div>
+    </div>
+  </div>
+</div>
+
+<div class="st">Velocity-time graph shapes — all cases</div>
+<div class="graph-grid">
+  <div class="graph-box">
+    <div class="graph-title">Constant Velocity</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="40" x2="117" y2="40" stroke="#14b8a6" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Velocity</text>
+    </svg>
+    <p>Horizontal line<br>Gradient = 0<br><strong>Zero acceleration</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Constant Acceleration</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="80" x2="115" y2="18" stroke="#3b82f6" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Velocity</text>
+    </svg>
+    <p>Straight line up<br>Positive gradient<br><strong>Constant acceleration</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Deceleration</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="20" x2="115" y2="78" stroke="#ef4444" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Velocity</text>
+    </svg>
+    <p>Straight line down<br>Negative gradient<br><strong>Deceleration</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Area = Distance</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="30" x2="115" y2="30" stroke="#8b5cf6" stroke-width="2.5"/>
+      <polygon points="18,30 115,30 115,84 18,84" fill="#ede9fe" opacity="0.7"/>
+      <line x1="18" y1="84" x2="18" y2="30" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="115" y1="84" x2="115" y2="30" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="66" y="62" font-size="9" fill="#6d28d9" text-anchor="middle" font-family="system-ui">Area =</text>
+      <text x="66" y="72" font-size="9" fill="#6d28d9" text-anchor="middle" font-family="system-ui">distance</text>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Velocity</text>
+    </svg>
+    <p>Shaded rectangle<br>base × height<br><strong>= distance travelled</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Accelerate then Constant</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <line x1="18" y1="78" x2="65" y2="25" stroke="#f97316" stroke-width="2.5"/>
+      <line x1="65" y1="25" x2="115" y2="25" stroke="#f97316" stroke-width="2.5"/>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Velocity</text>
+    </svg>
+    <p>Rise then flat<br>Accelerate then<br><strong>terminal velocity</strong></p>
+  </div>
+  <div class="graph-box">
+    <div class="graph-title">Trapezium Area</div>
+    <svg viewBox="0 0 130 100" width="100%">
+      <line x1="15" y1="85" x2="120" y2="85" stroke="#999" stroke-width="1.5"/>
+      <line x1="15" y1="85" x2="15" y2="10" stroke="#999" stroke-width="1.5"/>
+      <polygon points="20,84 55,30 100,30 115,84" fill="#ccfbf1" opacity="0.8"/>
+      <line x1="20" y1="84" x2="55" y2="30" stroke="#14b8a6" stroke-width="2.5"/>
+      <line x1="55" y1="30" x2="100" y2="30" stroke="#14b8a6" stroke-width="2.5"/>
+      <line x1="100" y1="30" x2="115" y2="84" stroke="#14b8a6" stroke-width="2.5"/>
+      <text x="68" y="62" font-size="9" fill="#0f766e" text-anchor="middle" font-family="system-ui">Area = dist</text>
+      <text x="68" y="97" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui">Time</text>
+      <text x="8" y="50" font-size="10" fill="#666" text-anchor="middle" font-family="system-ui" transform="rotate(-90,8,50)">Velocity</text>
+    </svg>
+    <p>Trapezium shape<br>Split into △ + □<br><strong>Add both areas</strong></p>
+  </div>
+</div>
+
+<div class="st">Key differences — distance-time vs velocity-time</div>
+<div class="card">
+  <div style="overflow-x:auto">
+  <table>
+    <thead><tr><th></th><th>Distance-Time Graph</th><th>Velocity-Time Graph</th></tr></thead>
+    <tbody>
+      <tr><td>y-axis</td><td>Distance (m)</td><td>Velocity (m/s)</td></tr>
+      <tr><td>Gradient means</td><td>Speed (m/s)</td><td>Acceleration (m/s²)</td></tr>
+      <tr><td>Flat line means</td><td>Stationary (v = 0)</td><td>Constant velocity (a = 0)</td></tr>
+      <tr><td>Steeper line means</td><td>Greater speed</td><td>Greater acceleration</td></tr>
+      <tr><td>Curved line means</td><td>Changing speed</td><td>Changing acceleration</td></tr>
+      <tr><td>Area under graph</td><td>Not used</td><td>Distance travelled</td></tr>
+      <tr><td>Can be negative?</td><td>No</td><td>Yes (opposite direction)</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<hr class="divider">
+<!-- ─── 3. WEIGHT ─── -->
+<div class="topic-banner tb-purple">3 · Weight</div>
+
+<div class="card c-purple">
+  <span class="bdg b-purple">Weight vs Mass</span>
+  <div class="g2" style="margin-top:8px">
+    <div>
+      <div class="fbox">W = m × g</div>
+      <div class="row" style="margin-top:4px"><span class="tm">W</span><span class="df">Weight (N — newtons). A force.</span></div>
+      <div class="row"><span class="tm">m</span><span class="df">Mass (kg — kilograms). Amount of matter.</span></div>
+      <div class="row"><span class="tm">g</span><span class="df">Gravitational field strength (N/kg). Earth: g = 10 N/kg. Moon: g ≈ 1.6 N/kg.</span></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Weight vs Mass — key differences</h3>
+      <div class="row"><span class="tm">Mass</span><span class="df">Amount of matter. Constant everywhere. Scalar. Measured in kg.</span></div>
+      <div class="row"><span class="tm">Weight</span><span class="df">Gravitational pull on mass. Changes with location. Vector (downward). Measured in N.</span></div>
+      <div class="row"><span class="tm">On the Moon</span><span class="df">Mass unchanged; weight is about 1/6 of weight on Earth because g is smaller.</span></div>
+      <div class="row"><span class="tm">Measured with</span><span class="df">Weight — newton meter (spring balance). Mass — balance scale.</span></div>
+    </div>
+  </div>
+  <div class="warn" style="margin-top:10px">⚠ Weight is a <strong>force</strong> — always measured in Newtons (N), never kilograms. Saying "my weight is 60 kg" is scientifically incorrect; that is your mass.</div>
+</div>
+
+<div class="st">Centre of gravity</div>
+<div class="card c-indigo">
+  <span class="bdg b-indigo">Centre of gravity</span>
+  <p style="font-size:13px;color:#444;line-height:1.6">The <strong>centre of gravity</strong> (or centre of mass) is the single point through which the entire weight of an object appears to act. For a uniform object it is at the geometric centre. Weight always acts vertically downward from this point.</p>
+  <div class="g2" style="margin-top:10px">
+    <div class="success">To find CoG experimentally: hang the object from different points — the CoG lies where the plumb lines intersect.</div>
+    <div class="info">Objects are stable when their centre of gravity is above their base of support. A low CoG and wide base = more stable.</div>
+  </div>
+</div>
+
+<hr class="divider">
+<!-- ─── 4. HOOKE'S LAW ─── -->
+<div class="topic-banner tb-amber">4 · Hooke's Law</div>
+
+<div class="card c-amber">
+  <span class="bdg b-amber">Hooke's Law</span>
+  <p style="font-size:14px;color:#444;line-height:1.6;margin-bottom:10px"><em>"The extension of a spring is directly proportional to the force applied to it, provided the elastic limit is not exceeded."</em></p>
+  <div class="g2">
+    <div>
+      <div class="fbox">F = k × e</div>
+      <div class="row" style="margin-top:4px"><span class="tm">F</span><span class="df">Force applied (N — newtons)</span></div>
+      <div class="row"><span class="tm">k</span><span class="df">Spring constant (N/m). Stiffness of the spring.</span></div>
+      <div class="row"><span class="tm">e</span><span class="df">Extension (m). Extension = stretched length − natural length.</span></div>
+      <div class="fbox-sm" style="margin-top:8px">k = F ÷ e &nbsp;|&nbsp; e = F ÷ k</div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Key terms</h3>
+      <div class="row"><span class="tm">Natural length</span><span class="df">Length of spring with no force applied</span></div>
+      <div class="row"><span class="tm">Extension</span><span class="df">Increase in length when force applied: e = stretched length − natural length</span></div>
+      <div class="row"><span class="tm">Spring constant k</span><span class="df">Higher k = stiffer spring. Units: N/m. Gradient of F-e graph.</span></div>
+      <div class="row"><span class="tm">Elastic limit</span><span class="df">Maximum force beyond which the spring does not return to original shape (permanent deformation)</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="st">Force-extension graph</div>
+<div class="card c-amber">
+  <div class="g2">
+    <div style="text-align:center">
+      <svg viewBox="0 0 200 160" width="100%" style="max-width:220px;display:block;margin:0 auto">
+        <defs>
+          <marker id="arr" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#666"/>
+          </marker>
+        </defs>
+        <line x1="20" y1="140" x2="185" y2="140" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="20" y1="140" x2="20" y2="10" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+        <!-- linear section -->
+        <line x1="22" y1="138" x2="110" y2="50" stroke="#f59e0b" stroke-width="2.5"/>
+        <!-- elastic limit point -->
+        <circle cx="110" cy="50" r="4" fill="#ef4444"/>
+        <!-- non-linear section -->
+        <path d="M110,50 Q140,35 165,30" stroke="#ef4444" stroke-width="2.5" fill="none" stroke-dasharray="5,3"/>
+        <!-- labels -->
+        <text x="100" y="153" font-size="10" fill="#555" text-anchor="middle" font-family="system-ui">Extension (m)</text>
+        <text x="12" y="80" font-size="10" fill="#555" text-anchor="middle" font-family="system-ui" transform="rotate(-90,12,80)">Force (N)</text>
+        <text x="118" y="45" font-size="9" fill="#991b1b" font-family="system-ui">Elastic</text>
+        <text x="118" y="55" font-size="9" fill="#991b1b" font-family="system-ui">limit</text>
+        <text x="55" y="110" font-size="9" fill="#92400e" font-family="system-ui">F ∝ e</text>
+        <text x="55" y="120" font-size="9" fill="#92400e" font-family="system-ui">(linear)</text>
+        <text x="155" y="25" font-size="9" fill="#991b1b" font-family="system-ui">Non-linear</text>
+      </svg>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Reading the graph</h3>
+      <div class="row"><span class="tm">Linear section</span><span class="df">Straight line through origin — F ∝ e. Hooke's Law applies. Gradient = spring constant k.</span></div>
+      <div class="row"><span class="tm">Elastic limit</span><span class="df">Point where the line starts to curve. Beyond this, Hooke's Law no longer applies.</span></div>
+      <div class="row"><span class="tm">Curved section</span><span class="df">Non-linear — extension increases faster than force. Spring is permanently deformed.</span></div>
+      <div class="row"><span class="tm">Spring constant</span><span class="df">k = gradient of straight section = F ÷ e</span></div>
+      <div class="success" style="margin-top:8px">A stiffer spring has a <strong>steeper</strong> gradient (larger k) — same force gives less extension.</div>
+    </div>
+  </div>
+</div>
+
+<div class="st">Elastic and inelastic deformation</div>
+<div class="card c-red">
+  <div class="g2">
+    <div>
+      <div class="row"><span class="tm">Elastic deformation</span><span class="df">Object returns to original shape when force is removed. Within the elastic limit.</span></div>
+      <div class="row"><span class="tm">Inelastic deformation</span><span class="df">Object does not return to original shape. Elastic limit exceeded. Permanent change.</span></div>
+    </div>
+    <div>
+      <div class="row"><span class="tm">Example — elastic</span><span class="df">Stretching a spring within its limit — returns to original length when released.</span></div>
+      <div class="row"><span class="tm">Example — inelastic</span><span class="df">Overloading a spring — spring stays stretched even when weights are removed.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="st">Hooke's Law practical — method</div>
+<div class="card c-amber">
+  <span class="bdg b-amber">Required practical</span>
+  <div class="g2">
+    <div>
+      <ol style="font-size:13px;color:#444;margin-left:16px;line-height:1.9">
+        <li>Hang spring from a clamp stand and measure its natural length</li>
+        <li>Add masses one at a time and record total force (F = mg)</li>
+        <li>Measure total length of spring each time</li>
+        <li>Calculate extension: e = total length − natural length</li>
+        <li>Plot F (y-axis) vs e (x-axis)</li>
+        <li>Find gradient = spring constant k</li>
+      </ol>
+    </div>
+    <div>
+      <div class="info">Use a ruler held vertically next to the spring and read at the bottom of the spring to reduce parallax error.</div>
+      <div class="warn" style="margin-top:8px">Do not exceed the elastic limit — if the spring doesn't return to its original length, you have gone too far.</div>
+      <div class="amber-box" style="margin-top:8px">The gradient of the linear section of the F vs e graph gives the spring constant k in N/m.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+<!-- ─── 5. NEWTON'S FIRST LAW ─── -->
+<div class="topic-banner tb-coral">5 · Newton's First Law of Motion</div>
+
+<div class="card c-coral">
+  <span class="bdg b-coral">Newton's First Law</span>
+  <p style="font-size:14px;color:#444;line-height:1.6;margin-bottom:12px;font-style:italic">"An object remains at rest, or continues to move in a straight line at constant velocity, unless acted upon by a resultant (unbalanced) force."</p>
+  <div class="g2">
+    <div>
+      <h3 style="margin-bottom:8px">Resultant force = 0 (balanced forces)</h3>
+      <div class="row"><span class="tm">If stationary</span><span class="df">Remains stationary. Forces are balanced.</span></div>
+      <div class="row"><span class="tm">If moving</span><span class="df">Continues at the same speed in the same direction. Constant velocity.</span></div>
+      <div class="row"><span class="tm">Example</span><span class="df">Car at terminal velocity — drive force equals drag. Resultant = 0. Constant speed.</span></div>
+      <div class="row"><span class="tm">Example</span><span class="df">Book on a table — weight downward balanced by normal reaction upward. Stationary.</span></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Resultant force ≠ 0 (unbalanced forces)</h3>
+      <div class="row"><span class="tm">Effect</span><span class="df">Object accelerates in the direction of the resultant force (Newton's 2nd Law: F = ma)</span></div>
+      <div class="row"><span class="tm">Speed changes</span><span class="df">Object speeds up, slows down, or changes direction</span></div>
+      <div class="row"><span class="tm">Example</span><span class="df">Car accelerating — drive force greater than drag. Resultant force forward.</span></div>
+      <div class="row"><span class="tm">Example</span><span class="df">Falling skydiver before terminal velocity — weight greater than air resistance.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="st">Inertia</div>
+<div class="card c-coral">
+  <span class="bdg b-coral">Inertia</span>
+  <p style="font-size:13px;color:#444;line-height:1.6">The tendency of an object to <strong>resist changes in its motion</strong>. An object at rest tends to stay at rest; an object in motion tends to stay in motion. Inertia is linked to <strong>mass</strong> — a more massive object has greater inertia and requires a larger force to change its motion (F = ma). Newton's First Law is sometimes called the <strong>Law of Inertia</strong>.</p>
+  <div class="g2" style="margin-top:10px">
+    <div class="info">Seatbelts work because of inertia — in a crash, the car stops but your body tends to continue moving forward at the original speed.</div>
+    <div class="amber-box">In space, far from gravitational fields and with no air resistance, an object continues moving at constant velocity indefinitely — no force is needed to keep it moving.</div>
+  </div>
+</div>
+
+<div class="st">Newton's First Law — free body diagrams</div>
+<div class="card">
+  <div class="g3">
+    <div style="text-align:center">
+      <svg viewBox="0 0 120 120" width="100%" style="max-width:130px;display:block;margin:0 auto">
+        <defs>
+          <marker id="arr-d" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#ef4444"/></marker>
+          <marker id="arr-u" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#22c55e"/></marker>
+        </defs>
+        <rect x="40" y="45" width="40" height="30" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+        <line x1="60" y1="75" x2="60" y2="105" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arr-d)"/>
+        <line x1="60" y1="45" x2="60" y2="15" stroke="#22c55e" stroke-width="2.5" marker-end="url(#arr-u)"/>
+        <text x="70" y="96" font-size="9" fill="#991b1b" font-family="system-ui">W</text>
+        <text x="65" y="28" font-size="9" fill="#166534" font-family="system-ui">N</text>
+        <text x="60" y="115" font-size="9" fill="#555" text-anchor="middle" font-family="system-ui">W = N → at rest</text>
+      </svg>
+      <p style="font-size:12px;color:#555;margin-top:4px">Stationary object<br>Resultant = 0</p>
+    </div>
+    <div style="text-align:center">
+      <svg viewBox="0 0 120 120" width="100%" style="max-width:130px;display:block;margin:0 auto">
+        <defs>
+          <marker id="arr-r" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3b82f6"/></marker>
+          <marker id="arr-l" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f97316"/></marker>
+          <marker id="arr-d2" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#ef4444"/></marker>
+          <marker id="arr-u2" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#22c55e"/></marker>
+        </defs>
+        <rect x="40" y="48" width="38" height="24" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+        <line x1="59" y1="72" x2="59" y2="100" stroke="#ef4444" stroke-width="2" marker-end="url(#arr-d2)"/>
+        <line x1="59" y1="48" x2="59" y2="20" stroke="#22c55e" stroke-width="2" marker-end="url(#arr-u2)"/>
+        <line x1="78" y1="60" x2="108" y2="60" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arr-r)"/>
+        <line x1="40" y1="60" x2="10" y2="60" stroke="#f97316" stroke-width="2.5" marker-end="url(#arr-l)"/>
+        <text x="59" y="115" font-size="9" fill="#555" text-anchor="middle" font-family="system-ui">F = drag → const v</text>
+      </svg>
+      <p style="font-size:12px;color:#555;margin-top:4px">Terminal velocity<br>Resultant = 0</p>
+    </div>
+    <div style="text-align:center">
+      <svg viewBox="0 0 120 120" width="100%" style="max-width:130px;display:block;margin:0 auto">
+        <defs>
+          <marker id="arr-rb" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3b82f6"/></marker>
+          <marker id="arr-lb" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f97316"/></marker>
+          <marker id="arr-db" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#ef4444"/></marker>
+          <marker id="arr-ub" markerWidth="7" markerHeight="7" refX="3" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#22c55e"/></marker>
+        </defs>
+        <rect x="40" y="48" width="38" height="24" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+        <line x1="59" y1="72" x2="59" y2="100" stroke="#ef4444" stroke-width="2" marker-end="url(#arr-db)"/>
+        <line x1="59" y1="48" x2="59" y2="20" stroke="#22c55e" stroke-width="2" marker-end="url(#arr-ub)"/>
+        <line x1="78" y1="60" x2="115" y2="60" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arr-rb)"/>
+        <line x1="40" y1="60" x2="18" y2="60" stroke="#f97316" stroke-width="2" marker-end="url(#arr-lb)"/>
+        <text x="59" y="115" font-size="9" fill="#555" text-anchor="middle" font-family="system-ui">F &gt; drag → accelerates</text>
+      </svg>
+      <p style="font-size:12px;color:#555;margin-top:4px">Unbalanced forces<br>Resultant ≠ 0 → accelerates</p>
+    </div>
+  </div>
+</div>
+
+<div class="st">Key equations summary</div>
+<div class="card">
+  <div class="g3">
+    <div style="text-align:center"><div class="fbox" style="font-size:14px">speed = Δd ÷ Δt</div><p style="font-size:12px;color:#666;margin-top:4px">Gradient of d-t graph<br>Units: m/s</p></div>
+    <div style="text-align:center"><div class="fbox" style="font-size:14px">a = Δv ÷ Δt</div><p style="font-size:12px;color:#666;margin-top:4px">Gradient of v-t graph<br>Units: m/s²</p></div>
+    <div style="text-align:center"><div class="fbox" style="font-size:14px">W = m × g</div><p style="font-size:12px;color:#666;margin-top:4px">Weight. g = 10 N/kg on Earth<br>Units: N</p></div>
+    <div style="text-align:center"><div class="fbox" style="font-size:14px">F = k × e</div><p style="font-size:12px;color:#666;margin-top:4px">Hooke's Law<br>k in N/m, e in m</p></div>
+    <div style="text-align:center"><div class="fbox" style="font-size:14px">F = m × a</div><p style="font-size:12px;color:#666;margin-top:4px">Newton's 2nd Law<br>Units: N, kg, m/s²</p></div>
+    <div style="text-align:center"><div class="fbox" style="font-size:14px">dist = area</div><p style="font-size:12px;color:#666;margin-top:4px">Under v-t graph<br>Rectangle or triangle</p></div>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:24px">
+  <button class="ab" onclick="sp('sa')">Go to Self-Assessment →</button>
+</div>
+</div>
+
+<!-- ══════════════════════════ SELF ASSESSMENT ══════════════════ -->
+<div class="pg" id="pg-sa">
+<h1>Self-Assessment</h1>
+<p class="subtitle">Rate your confidence honestly: Green = confident · Amber = unsure · Red = not yet learned</p>
+<div id="sa-wrap"></div>
+<div style="text-align:center;margin-top:18px">
+  <button class="ab" onclick="sp('dq')">Diagnostic Questions →</button>
+</div>
+</div>
+
+<!-- ══════════════════════════ DIAGNOSTIC ════════════════════════ -->
+<div class="pg" id="pg-dq">
+<h1>Diagnostic Questions</h1>
+<p class="subtitle">Select your answer for instant feedback and a full explanation. 16 questions across all five topics.</p>
+<div id="dq-wrap"></div>
+<div style="text-align:center;margin-top:18px">
+  <button class="ab" onclick="sp('cq')">Calculation Practice →</button>
+</div>
+</div>
+
+<!-- ══════════════════════════ CALCULATIONS ══════════════════════ -->
+<div class="pg" id="pg-cq">
+<h1>Calculation Practice</h1>
+<p class="subtitle">Show working on paper first, then type your numerical answer. 12 questions across all topics.</p>
+<div id="cq-wrap"></div>
+<div style="text-align:center;margin-top:18px">
+  <button class="ab" onclick="bs();sp('sm')">View My Summary →</button>
+</div>
+</div>
+
+<!-- ══════════════════════════ SUMMARY ═══════════════════════════ -->
+<div class="pg" id="pg-sm">
+<h1>My Summary</h1>
+<p class="subtitle">Your personalised performance breakdown across all topic areas</p>
+<div id="sm-wrap"></div>
+</div>
+
+</div>
+
+<script>
+var SA=[
+  {id:'s1',tp:'Distance-Time Graphs',tx:'I can state that the gradient of a distance-time graph equals speed, and that a flat line means the object is stationary.'},
+  {id:'s2',tp:'Distance-Time Graphs',tx:'I can sketch and interpret all d-t graph shapes: stationary, constant speed, faster speed, accelerating, decelerating, and return journey.'},
+  {id:'s3',tp:'Distance-Time Graphs',tx:'I can calculate speed from a distance-time graph by calculating the gradient (Δd ÷ Δt) using a triangle drawn on the graph.'},
+  {id:'s4',tp:'Velocity-Time Graphs',tx:'I can state that the gradient of a velocity-time graph equals acceleration, and that the area under the graph equals distance travelled.'},
+  {id:'s5',tp:'Velocity-Time Graphs',tx:'I can sketch and interpret all v-t graph shapes: constant velocity, constant acceleration, deceleration, and terminal velocity.'},
+  {id:'s6',tp:'Velocity-Time Graphs',tx:'I can calculate acceleration from a v-t graph (gradient = Δv ÷ Δt) and calculate distance from area under the graph (rectangle, triangle, trapezium).'},
+  {id:'s7',tp:'Velocity-Time Graphs',tx:'I can explain the key differences between a distance-time graph and a velocity-time graph, including what gradient and flat line mean in each case.'},
+  {id:'s8',tp:'Weight',tx:'I can define weight as a force (in N) caused by gravity, and distinguish it from mass (in kg), which is the amount of matter.'},
+  {id:'s9',tp:'Weight',tx:'I can apply W = mg using g = 10 N/kg on Earth, and explain why weight changes on other planets but mass stays the same.'},
+  {id:'s10',tp:'Weight',tx:'I can define the centre of gravity and explain that weight acts downward through this point.'},
+  {id:'s11',tp:"Hooke's Law",tx:"I can state Hooke's Law: extension is directly proportional to force applied (F = ke), provided the elastic limit is not exceeded."},
+  {id:'s12',tp:"Hooke's Law",tx:'I can apply F = ke to find force, spring constant or extension, and recall that k (N/m) is the gradient of the linear section of the F-extension graph.'},
+  {id:'s13',tp:"Hooke's Law",tx:'I can interpret a force-extension graph: identify the linear region (Hooke\'s Law), the elastic limit, and the non-linear region beyond it.'},
+  {id:'s14',tp:"Hooke's Law",tx:'I can distinguish between elastic deformation (returns to original shape) and inelastic/plastic deformation (permanent change).'},
+  {id:'s15',tp:"Newton's First Law",tx:"I can state Newton's First Law and explain that a resultant force of zero means an object stays at rest or moves at constant velocity."},
+  {id:'s16',tp:"Newton's First Law",tx:'I can explain inertia — the tendency of objects to resist changes in motion — and link it to mass.'},
+  {id:'s17',tp:"Newton's First Law",tx:'I can draw and interpret free body diagrams showing balanced and unbalanced forces, and link them to Newton\'s First Law.'}
+];
+
+var DQ=[
+  {id:'d1',tp:'Distance-Time Graph',
+   q:'On a distance-time graph, what does a steeper gradient represent?',
+   os:['Greater acceleration','Greater speed','Greater distance','Greater time'],
+   c:1,ex:'The gradient of a distance-time graph = speed (Δd ÷ Δt). A steeper gradient means the distance is changing more rapidly per unit time — so the object is moving at a greater speed.'},
+  {id:'d2',tp:'Distance-Time Graph',
+   q:'On a distance-time graph, what does a horizontal (flat) line represent?',
+   os:['Constant speed','Constant acceleration','The object is stationary','The object is moving backwards'],
+   c:2,ex:'A horizontal line means distance is not changing with time — the object is stationary. Gradient = speed = 0.'},
+  {id:'d3',tp:'Distance-Time Graph',
+   q:'A distance-time graph shows a curve that is getting progressively steeper. What does this indicate?',
+   os:['The object is decelerating','The object is stationary','The object is moving at constant speed','The object is accelerating'],
+   c:3,ex:'A curve getting steeper means the gradient (speed) is increasing over time — the object is accelerating.'},
+  {id:'d4',tp:'Distance-Time Graph',
+   q:'A student travels 240 m in 30 s. What is their speed?',
+   os:['0.125 m/s','7200 m/s','8 m/s','210 m/s'],
+   c:2,ex:'speed = d ÷ t = 240 ÷ 30 = 8 m/s. Always check units: distance in m, time in s, speed in m/s.'},
+  {id:'d5',tp:'Velocity-Time Graph',
+   q:'On a velocity-time graph, what does the gradient represent?',
+   os:['Speed','Distance','Acceleration','Displacement'],
+   c:2,ex:'The gradient of a velocity-time graph = acceleration = Δv ÷ Δt. Compare with d-t graph where gradient = speed.'},
+  {id:'d6',tp:'Velocity-Time Graph',
+   q:'How do you calculate the distance travelled from a velocity-time graph?',
+   os:['Find the gradient of the line','Find the area under the graph','Read off the highest velocity value','Multiply the final velocity by time'],
+   c:1,ex:'The area under a velocity-time graph = distance travelled. For a rectangle: base × height. For a triangle: ½ × base × height.'},
+  {id:'d7',tp:'Velocity-Time Graph',
+   q:'A velocity-time graph shows a straight line with a negative gradient. What does this mean?',
+   os:['The object is stationary','The object is accelerating','The object is decelerating','The object has zero velocity'],
+   c:2,ex:'A negative gradient on a v-t graph means velocity is decreasing over time — the object is decelerating (slowing down). The object is still moving (velocity is still positive) unless the line crosses the x-axis.'},
+  {id:'d8',tp:'Velocity-Time Graph',
+   q:'A car accelerates uniformly from 0 to 20 m/s in 5 seconds. What is the acceleration?',
+   os:['4 m/s²','100 m/s²','0.25 m/s²','25 m/s²'],
+   c:0,ex:'a = Δv ÷ Δt = (20 − 0) ÷ 5 = 4 m/s². This is the gradient of the v-t graph.'},
+  {id:'d9',tp:'Weight',
+   q:'An astronaut has a mass of 80 kg on Earth (g = 10 N/kg). They travel to the Moon (g = 1.6 N/kg). Which statement is correct?',
+   os:['Mass = 80 kg, Weight = 800 N on Moon','Mass = 80 kg everywhere; Weight = 128 N on Moon','Mass = 13 kg on Moon; Weight = 800 N on Moon','Mass and weight both decrease on the Moon'],
+   c:1,ex:'Mass (80 kg) is constant everywhere — it is the amount of matter. Weight = mg = 80 × 1.6 = 128 N on the Moon. Weight changes because g is different; mass never changes.'},
+  {id:'d10',tp:'Weight',
+   q:'Why is weight a vector quantity but mass is a scalar?',
+   os:['Weight is measured in Newtons and mass in kilograms','Weight has both magnitude and direction (downward force); mass only has magnitude (amount of matter)','Weight changes on different planets; mass does not','Weight is measured with a newton meter; mass with a balance'],
+   c:1,ex:'A vector has both magnitude and direction. Weight is a force acting downward (direction), so it is a vector. Mass is just the amount of matter — it has no direction, making it a scalar.'},
+  {id:'d11',tp:"Hooke's Law",
+   q:"A spring has a spring constant of 40 N/m. A force of 8 N is applied. What is the extension?",
+   os:['320 m','5 m','0.2 m','48 m'],
+   c:2,ex:"F = ke → e = F ÷ k = 8 ÷ 40 = 0.2 m. Spring constant k is measured in N/m, extension in m, force in N."},
+  {id:'d12',tp:"Hooke's Law",
+   q:"On a force-extension graph, a straight line passes through the origin. What does the gradient of this line represent?",
+   os:['The extension of the spring','The elastic limit','The spring constant k','The mass of the spring'],
+   c:2,ex:"The gradient of the linear (straight) section of a force-extension graph = F ÷ e = spring constant k (in N/m). A steeper gradient means a stiffer spring (higher k)."},
+  {id:'d13',tp:"Hooke's Law",
+   q:"A spring is stretched beyond its elastic limit. What happens when the force is removed?",
+   os:['The spring returns to its original length','The spring contracts further','The spring is permanently deformed and does not return to its original length','The spring constant increases'],
+   c:2,ex:"Beyond the elastic limit, the deformation becomes inelastic (plastic). The spring has been permanently deformed and will not return to its original length when the force is removed."},
+  {id:'d14',tp:"Newton's First Law",
+   q:"A book sits stationary on a table. Which statement correctly applies Newton's First Law?",
+   os:['No forces act on the book','The resultant force is zero — weight downward is balanced by normal reaction upward, so the book stays at rest','The book is moving at constant velocity','A force must be continuously applied to keep it stationary'],
+   c:1,ex:"Newton's First Law: zero resultant force → object remains at rest. The book's weight (downward) is exactly balanced by the normal contact force from the table (upward). Resultant = 0."},
+  {id:'d15',tp:"Newton's First Law",
+   q:"A spacecraft in deep space with no forces acting on it is travelling at 3000 m/s. What happens to its speed?",
+   os:['It gradually slows down and stops','It speeds up because it has no drag','It continues at 3000 m/s indefinitely','It accelerates because there is no gravity'],
+   c:2,ex:"Newton's First Law: with zero resultant force, an object continues at constant velocity. With no friction, gravity or other forces, the spacecraft maintains 3000 m/s indefinitely."},
+  {id:'d16',tp:"Newton's First Law",
+   q:"A car is travelling at constant velocity on a straight road. Which statement about the forces on it is correct?",
+   os:['No forces act on the car','The engine force is greater than the drag force','The drag force is greater than the engine force','The engine force equals the drag force — resultant force is zero'],
+   c:3,ex:"Constant velocity means zero acceleration, which by Newton's First Law means zero resultant force. Engine force forward = drag (air resistance + friction) backward. The forces are balanced."}
+];
+
+var CQ=[
+  {id:'c1',tp:'Speed from d-t graph',
+   q:'An object travels 180 m in 12 seconds. Calculate its speed in m/s (this is equivalent to finding the gradient of a d-t graph).',
+   ans:15,tol:0.1,unit:'m/s',wk:'speed = d ÷ t = 180 ÷ 12 = 15 m/s'},
+  {id:'c2',tp:'Distance from speed and time',
+   q:'An object moves at 25 m/s for 8 seconds. Calculate the distance travelled in m.',
+   ans:200,tol:0,unit:'m',wk:'d = v × t = 25 × 8 = 200 m'},
+  {id:'c3',tp:'Acceleration from v-t graph',
+   q:'A car accelerates from 5 m/s to 35 m/s in 6 seconds. Calculate the acceleration in m/s².',
+   ans:5,tol:0.1,unit:'m/s²',wk:'a = Δv ÷ Δt = (35 − 5) ÷ 6 = 30 ÷ 6 = 5 m/s²'},
+  {id:'c4',tp:'Distance from v-t graph — rectangle',
+   q:'A car travels at a constant velocity of 18 m/s for 10 seconds. Calculate the distance travelled (area under v-t graph) in m.',
+   ans:180,tol:0,unit:'m',wk:'Distance = area = base × height = 10 × 18 = 180 m (rectangle area)'},
+  {id:'c5',tp:'Distance from v-t graph — triangle',
+   q:'A car accelerates from 0 to 24 m/s in 6 seconds at constant acceleration. Calculate the distance travelled (area under v-t graph) in m.',
+   ans:72,tol:0,unit:'m',wk:'Distance = area = ½ × base × height = ½ × 6 × 24 = 72 m (triangle area)'},
+  {id:'c6',tp:'Weight — find weight',
+   q:'Calculate the weight of a 65 kg person on Earth (g = 10 N/kg). Give your answer in N.',
+   ans:650,tol:0,unit:'N',wk:'W = mg = 65 × 10 = 650 N'},
+  {id:'c7',tp:'Weight — find mass',
+   q:'An object has a weight of 350 N on Earth (g = 10 N/kg). Calculate its mass in kg.',
+   ans:35,tol:0,unit:'kg',wk:'m = W ÷ g = 350 ÷ 10 = 35 kg'},
+  {id:'c8',tp:'Weight on another planet',
+   q:'The gravitational field strength on Mars is 3.7 N/kg. Calculate the weight of a 70 kg astronaut on Mars in N.',
+   ans:259,tol:1,unit:'N',wk:'W = mg = 70 × 3.7 = 259 N'},
+  {id:'c9',tp:"Hooke's Law — find extension",
+   q:'A spring with spring constant 25 N/m has a force of 5 N applied to it. Calculate the extension in m.',
+   ans:0.2,tol:0.005,unit:'m',wk:'e = F ÷ k = 5 ÷ 25 = 0.2 m'},
+  {id:'c10',tp:"Hooke's Law — find force",
+   q:'A spring with spring constant 60 N/m is extended by 0.15 m. Calculate the force applied in N.',
+   ans:9,tol:0.05,unit:'N',wk:'F = ke = 60 × 0.15 = 9 N'},
+  {id:'c11',tp:"Hooke's Law — find k",
+   q:'A force of 12 N extends a spring by 0.04 m. Calculate the spring constant in N/m.',
+   ans:300,tol:1,unit:'N/m',wk:'k = F ÷ e = 12 ÷ 0.04 = 300 N/m'},
+  {id:'c12',tp:"Hooke's Law — extension from length",
+   q:'A spring has a natural length of 8 cm. When a 6 N force is applied it stretches to 14 cm. The spring constant k = F ÷ e. Calculate k in N/m. (Convert cm to m first.)',
+   ans:100,tol:1,unit:'N/m',wk:'Extension e = 14 − 8 = 6 cm = 0.06 m. k = F ÷ e = 6 ÷ 0.06 = 100 N/m'}
+];
+
+var ss={},ds={},cs={};
+
+function sp(id){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on')});
+  document.getElementById('pg-'+id).classList.add('on');
+  var m={ko:0,sa:1,dq:2,cq:3,sm:4};
+  document.querySelectorAll('.nb')[m[id]].classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function bSA(){
+  var c=document.getElementById('sa-wrap');c.innerHTML='';
+  SA.forEach(function(s){
+    var d=document.createElement('div');d.className='si';
+    d.innerHTML='<p class="ss"><strong style="font-size:12px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.05em">'+s.tp+'</strong><br><br>'+s.tx+'</p>'
+      +'<div class="sbs">'
+      +'<button class="sb" onclick="setSA(\''+s.id+'\',\'g\',this)">✓ Confident</button>'
+      +'<button class="sb" onclick="setSA(\''+s.id+'\',\'a\',this)">~ Unsure</button>'
+      +'<button class="sb" onclick="setSA(\''+s.id+'\',\'r\',this)">✗ Not yet</button>'
+      +'</div>';
+    c.appendChild(d);
+  });
+}
+
+function setSA(id,v,btn){
+  ss[id]=v;
+  btn.parentElement.querySelectorAll('button').forEach(function(b){b.className='sb'});
+  btn.classList.add(v==='g'?'sg':v==='a'?'sam':'sr');
+}
+
+function bDQ(){
+  var c=document.getElementById('dq-wrap');c.innerHTML='';
+  DQ.forEach(function(q,i){
+    var d=document.createElement('div');d.className='qb';
+    var h='<p style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">'+q.tp+' · Q'+(i+1)+' of '+DQ.length+'</p>'
+      +'<p class="qt">'+q.q+'</p>';
+    q.os.forEach(function(o,j){
+      h+='<button class="ob" onclick="chkD(\''+q.id+'\','+j+','+q.c+',this,\'fb-'+q.id+'\')">'+String.fromCharCode(65+j)+') '+o+'</button>';
+    });
+    h+='<div class="fb" id="fb-'+q.id+'"></div>';
+    d.innerHTML=h;c.appendChild(d);
+  });
+}
+
+function chkD(qid,ch,co,btn,fbid){
+  btn.parentElement.querySelectorAll('.ob').forEach(function(b){b.disabled=true});
+  var fb=document.getElementById(fbid);fb.classList.add('on');
+  var q=DQ.filter(function(x){return x.id===qid})[0];
+  if(ch===co){
+    btn.classList.add('oc');fb.className='fb on fbc';
+    fb.innerHTML='<strong>Correct!</strong> '+q.ex;ds[qid]=true;
+  } else {
+    btn.classList.add('ow');
+    btn.parentElement.querySelectorAll('.ob')[co].classList.add('orc');
+    fb.className='fb on fbw';
+    fb.innerHTML='<strong>Incorrect.</strong> '+q.ex;ds[qid]=false;
+  }
+}
+
+function bCQ(){
+  var c=document.getElementById('cq-wrap');c.innerHTML='';
+  CQ.forEach(function(q,i){
+    var d=document.createElement('div');d.className='card';d.style.marginBottom='14px';
+    d.innerHTML='<p style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">'+q.tp+' · Q'+(i+1)+' of '+CQ.length+'</p>'
+      +'<p style="font-size:14px;margin-bottom:10px;line-height:1.55">'+q.q+'</p>'
+      +'<p style="font-size:12px;color:#888;margin-bottom:2px">Answer in '+q.unit+'</p>'
+      +'<input class="ci" type="number" id="ci-'+q.id+'" placeholder="Type your numerical answer..." step="any"/>'
+      +'<button class="ckb" onclick="chkC(\''+q.id+'\','+q.ans+','+q.tol+',\'cf-'+q.id+'\')">Check answer</button>'
+      +'<div class="fb" id="cf-'+q.id+'"></div>';
+    c.appendChild(d);
+  });
+}
+
+function chkC(id,ans,tol,fbid){
+  var inp=document.getElementById('ci-'+id);
+  var v=parseFloat(inp.value);
+  var fb=document.getElementById(fbid);fb.classList.add('on');
+  if(isNaN(v)){fb.className='fb on fbw';fb.textContent='Please enter a numerical answer.';return;}
+  inp.disabled=true;
+  var q=CQ.filter(function(x){return x.id===id})[0];
+  if(Math.abs(v-ans)<=tol){
+    fb.className='fb on fbc';
+    fb.innerHTML='<strong>Correct!</strong> Working: '+q.wk;cs[id]=true;
+  } else {
+    fb.className='fb on fbw';
+    fb.innerHTML='<strong>Not quite.</strong> Correct answer: <strong>'+ans+' '+q.unit+'</strong>. Working: '+q.wk;cs[id]=false;
+  }
+}
+
+function bs(){
+  var dT=DQ.length,dR=Object.values(ds).filter(function(v){return v}).length;
+  var cT=CQ.length,cR=Object.values(cs).filter(function(v){return v}).length;
+  var tot=dT+cT,right=dR+cR;
+  var pct=tot>0?Math.round(right/tot*100):0;
+  var saG=Object.values(ss).filter(function(v){return v==='g'}).length;
+  var saA=Object.values(ss).filter(function(v){return v==='a'}).length;
+  var saR=Object.values(ss).filter(function(v){return v==='r'}).length;
+  var col=pct>=70?'#166534':pct>=50?'#92400e':'#991b1b';
+  var bg=pct>=70?'#dcfce7':pct>=50?'#fef3c7':'#fee2e2';
+  var lbl=pct>=70?'Great work! Keep it up.':pct>=50?'Good progress — keep revising.':'Needs more revision — use the KO to review.';
+
+  var topics=[
+    {lb:'Distance-Time Graphs — interpreting',si:['s1','s2'],di:['d1','d2','d3'],ci:[]},
+    {lb:'Distance-Time Graphs — calculating speed',si:['s3'],di:['d4'],ci:['c1','c2']},
+    {lb:'Velocity-Time Graphs — interpreting',si:['s4','s5','s7'],di:['d5','d7'],ci:[]},
+    {lb:'Velocity-Time Graphs — calculations',si:['s6'],di:['d6','d8'],ci:['c3','c4','c5']},
+    {lb:'Weight and mass',si:['s8','s9'],di:['d9','d10'],ci:['c6','c7','c8']},
+    {lb:'Centre of gravity',si:['s10'],di:[],ci:[]},
+    {lb:"Hooke's Law — statement and graphs",si:['s11','s13','s14'],di:['d11','d12','d13'],ci:[]},
+    {lb:"Hooke's Law — calculations",si:['s12'],di:['d11'],ci:['c9','c10','c11','c12']},
+    {lb:"Newton's First Law and inertia",si:['s15','s16','s17'],di:['d14','d15','d16'],ci:[]}
+  ];
+
+  var rows='';var strong=[];var weak=[];var developing=[];
+  topics.forEach(function(t){
+    var seen={};var qr=[];
+    t.di.forEach(function(id){if(!seen[id]&&ds[id]!==undefined){seen[id]=1;qr.push(ds[id])}});
+    t.ci.forEach(function(id){if(!seen[id]&&cs[id]!==undefined){seen[id]=1;qr.push(cs[id])}});
+    var qp=qr.length?qr.filter(function(v){return v}).length/qr.length:null;
+    var sv=t.si.map(function(id){return ss[id]}).filter(Boolean);
+    var st,pc;
+    if(qp!==null){
+      if(qp>=0.75){st='Strong';pc='pig';}
+      else if(qp>=0.5){st='Developing';pc='pia';}
+      else{st='Needs work';pc='pir';}
+    } else if(sv.length&&sv.every(function(v){return v==='g'})){st='Self-confident';pc='pig';}
+    else if(sv.some(function(v){return v==='r'})){st='Needs work';pc='pir';}
+    else if(sv.some(function(v){return v==='a'})){st='Developing';pc='pia';}
+    else{st='Not yet assessed';pc='pia';}
+    rows+='<div class="tr2"><span style="font-size:14px">'+t.lb+'</span><span class="pill '+pc+'">'+st+'</span></div>';
+    if(st==='Strong'||st==='Self-confident')strong.push(t.lb);
+    else if(st==='Developing')developing.push(t.lb);
+    if(st==='Needs work')weak.push(t.lb);
+  });
+
+  var html='<div class="g3" style="margin-bottom:16px">'
+    +'<div class="stat-card"><div class="stat-label">Questions correct</div><div class="stat-val">'+right+'/'+tot+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Overall score</div><div class="stat-val" style="color:'+col+'">'+pct+'%</div></div>'
+    +'<div class="stat-card" style="background:'+bg+'"><div class="stat-label">Result</div><div style="font-size:13px;font-weight:700;color:'+col+';margin-top:6px;line-height:1.4">'+lbl+'</div></div>'
+    +'</div>'
+    +'<div class="g3" style="margin-bottom:16px">'
+    +'<div class="stat-card"><div class="stat-label">Self-assessment</div><div style="margin-top:6px">'
+    +'<span class="pill pig" style="display:block;margin-bottom:4px;text-align:center">'+saG+' confident</span>'
+    +'<span class="pill pia" style="display:block;margin-bottom:4px;text-align:center">'+saA+' unsure</span>'
+    +'<span class="pill pir" style="display:block;text-align:center">'+saR+' not yet</span></div></div>'
+    +'<div class="stat-card"><div class="stat-label">Diagnostic MCQ</div><div class="stat-val">'+dR+'/'+dT+'</div></div>'
+    +'<div class="stat-card"><div class="stat-label">Calculations</div><div class="stat-val">'+cR+'/'+cT+'</div></div>'
+    +'</div>'
+    +'<div class="st" style="font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:9px">Topic-by-topic breakdown</div>'
+    +'<div class="card">'+rows+'</div>';
+
+  if(strong.length){html+='<div class="card c-green" style="margin-top:12px"><h3 style="color:#166534;margin-bottom:6px">Topics you know well</h3><p style="font-size:13px;color:#444">'+strong.join(' &nbsp;·&nbsp; ')+'</p></div>';}
+  if(developing.length){html+='<div class="card c-amber" style="margin-top:12px"><h3 style="color:#92400e;margin-bottom:6px">Topics to consolidate</h3><p style="font-size:13px;color:#444">'+developing.join(' &nbsp;·&nbsp; ')+'</p></div>';}
+  if(weak.length){html+='<div class="card c-red" style="margin-top:12px"><h3 style="color:#991b1b;margin-bottom:6px">Priority areas to revise</h3><p style="font-size:13px;color:#444">'+weak.join(' &nbsp;·&nbsp; ')+'</p><p style="font-size:13px;color:#666;margin-top:8px">Return to the Knowledge Organiser, re-read those sections carefully, then retry the questions.</p></div>';}
+  if(!strong.length&&!weak.length&&!developing.length&&tot===0){html+='<div class="card c-amber" style="margin-top:12px"><p style="font-size:13px;color:#444">Complete the self-assessment and questions first to see your personalised breakdown.</p></div>';}
+  html+='<div style="text-align:center;margin-top:24px"><button class="ab" onclick="sp(\'ko\')">Review Knowledge Organiser →</button></div>';
+  document.getElementById('sm-wrap').innerHTML=html;
+}
+
+bSA();bDQ();bCQ();
+</script>
+</body>
+</html>
